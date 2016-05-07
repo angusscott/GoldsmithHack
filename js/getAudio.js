@@ -11,9 +11,36 @@
             success: function (response) {
                 if (response.tracks.items.length) {
                     var track = response.tracks.items[0];
+                    var previewUrl = track.preview_url;
                     audio.src = track.preview_url;
-                    audio.play();
-                    communicateAction('<div>Playing ' + track.name + ' by ' + track.artists[0].name + '</div><img width="150" src="' + track.album.images[1].url + '">');
+                    var context = new (window.AudioContext || window.webkitAudioContext) ();
+                    var request = new XMLHttpRequest();
+                    request.open('GET', previewUrl, true);
+                    request.responseType = 'arraybuffer';
+                    request.onload = function() {
+                        // Create offline context
+                        var OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+                        var offlineContext = new OfflineContext(1, 2, 44100);
+
+                        offlineContext.decodeAudioData(request.response, function(buffer) {
+
+                            // Create buffer source
+                            var source = offlineContext.createBufferSource();
+                            source.buffer = buffer;
+
+                            // Create filter
+                            var filter = offlineContext.createBiquadFilter();
+                            filter.type = "lowpass";
+
+                            // Pipe the song into the filter, and the filter into the offline context
+                            //filter.connect(offlineContext.destination);
+                            source.connect(offlineContext.destination);
+                            console.log(source)
+                            source.start(offlineContext.currentTime);
+
+                        });
+                    }
+                    request.send();
                 }
             }
         });

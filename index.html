@@ -12,38 +12,46 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-7", id="graph">
             <p>Please insert graph here</p>
         </div>
-        <div class="col-md-6">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <label for="inputArtist" class="control-label col-xs-2">Artist</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input class="form-control" id="inputArtist" value="">
-                    </div>
+        <div class="col-md-5", id="datainput">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label for="inputArtist" class="control-label col-xs-2">Artist</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" id="inputArtist" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label for="inputTrack" class="control-label col-xs-2">Track</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input class="form-control" id="inputTrack" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <a class="btn btn-primary btn-lg btn-block", id="playmusic", type="submit">Lets play some music</a>
+                            </div>
+                            <div class="col-md-2">
+                                <a class="btn btn-primary btn-lg btn-block", id="randomise"><span class="glyphicon glyphicon-random"></span></a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <label for="inputTrack" class="control-label col-xs-2">Track</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input class="form-control" id="inputTrack" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-11">
-                        <a class="btn btn-primary btn-lg btn-block", id="playmusic", type="submit">Lets play some music</a>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
 <script src="js/getAudio.js"></script>
 
 </body>
