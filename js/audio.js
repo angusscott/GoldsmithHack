@@ -6,6 +6,7 @@ var data = [5, 7, 1, 10, 11, 20, 15, 1, 20],
     context = new AudioContext(),
     masterVolume = context.createGain(),
     startTime = context.currentTime,
+    pitchBender = context.createBiquadFilter(),
     frequency = 493.883, // 'B' note
     duration = 10;
 
@@ -42,6 +43,7 @@ var osc = context.createOscillator();
 var request = new XMLHttpRequest();
 request.open('GET', 'myfile.mp3', true);
 request.responseType = 'arraybuffer';
+
 request.onload = function() {
     var undecodedAudio = request.response;
 
@@ -54,10 +56,22 @@ request.onload = function() {
 
         // Tell the AudioBufferSourceNode to use this AudioBuffer.
         sourceBuffer.buffer = buffer;
-        sourceBuffer.connect(context.destination);
+
+        // Connect to the speakers, via gain (volume) controller
+        sourceBuffer.connect(masterVolume);
+        masterVolume.connect(pitchBender);
+        pitchBender.connect(context.destination);
+
+        // Fade out after 10 seconds
+        masterVolume.gain.linearRampToValueAtTime(0.5, startTime+10);
+
+        // Bend it like Beckham
+        pitchBender.type = "allpass"; // doesn't do anything
+        sourceBuffer.playbackRate.value = 3.6;
 
         // Start playing now
-        sourceBuffer.start(context.currentTime);
+        sourceBuffer.start(startTime);
+        //sourceBuffer.stop(context.currentTime+10);
     });
 };
 request.send();
