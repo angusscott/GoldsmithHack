@@ -1,5 +1,5 @@
  var dataset = [5, 7, 1, 10, 11, 20, 15, 1, 20],
-        duration = 30,
+        duration = 20, // total playback, in seconds
         interval = duration/dataset.length,
         volumes = [],
         speeds = [];
@@ -12,9 +12,15 @@
         return(c*(x-a)/(b-a) + d*(x-a)/(b-a));
     };
 
+    // Output range limits
+    var volmin = 0.05,
+        volmax = 0.3,
+        spdmin = 0.5,
+        spdmax = 3.0;
+
     for (var i=0; i<dataset.length; i++) {
-        volumes.push(linearScale(dataset[i], 0.01, 0.3));
-        speeds.push(linearScale(dataset[i], 0.5, 3.0));
+        volumes.push(linearScale(dataset[i], volmin, volmax));
+        speeds.push(linearScale(dataset[i], spdmin, spdmax));
     };
 
     function searchTracks(query) {
@@ -38,10 +44,13 @@
                         context.decodeAudioData(undecodedAudio, function (buffer) {
                             var sourceBuffer = context.createBufferSource(),
                                 startTime = context.currentTime,
-                                masterVolume = context.createGain();
+                                masterVolume = context.createGain(),
+                                biquadFilter = context.createBiquadFilter();
                             sourceBuffer.buffer = buffer;
                             sourceBuffer.connect(masterVolume);
-                            masterVolume.connect(context.destination);
+                            masterVolume.connect(biquadFilter);
+                            biquadFilter.connect(context.destination);
+                            // biquadFilter.Q.value = 0.5; // makes quality rubbish
                             var timepoint = startTime;
                             for (var i = 0; i < dataset.length; i++) {
                                 masterVolume.gain.linearRampToValueAtTime(volumes[i], timepoint);
