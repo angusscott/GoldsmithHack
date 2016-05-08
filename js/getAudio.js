@@ -76,7 +76,18 @@
     }
 
     $( "#randomise" ).click(function() {
-        playSong("Sandstorm", "Darude");
+        var u = Math.random();
+        if(Math.random()>0.5) {
+            console.log('Playing Darude');
+            playSong("Sandstorm", "Darude");
+            $("#inputTrack").val("Sandstorm");
+            $("#inputArtist").val("Darude");
+        } else {
+            console.log('Playing Rick Astley');
+            playSong("Rick Astley", "Never Gonna Give You Up");
+            $("#inputTrack").val("Never Gonna Give You Up");
+            $("#inputArtist").val("Rick Astley");
+        };
     });
 
     $("#playmusic").click(function () {
