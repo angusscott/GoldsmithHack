@@ -1,8 +1,6 @@
  var dataset = [5, 7, 1, 10, 11, 3, 15, 1, 20],
         duration = 30, // total playback, in seconds
-        interval = duration/dataset.length,
-        volumes = [],
-        speeds = [];
+        interval = duration/dataset.length;
 
     function linearScale(x, outmin, outmax) {
         var a = Math.min(Math.min.apply(null, dataset), 0),
@@ -19,6 +17,8 @@
         spdmax = 3.0;
 
     function searchTracks(query) {
+        var volumes = [],
+            speeds = [];
         for (var i=0; i<dataset.length; i++) {
             volumes.push(linearScale(dataset[i], volmin, volmax));
             speeds.push(linearScale(dataset[i], spdmin, spdmax));
