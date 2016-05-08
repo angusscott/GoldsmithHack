@@ -1,5 +1,5 @@
- var dataset = [5, 7, 1, 10, 11, 20, 15, 1, 20],
-        duration = 20, // total playback, in seconds
+ var dataset = [5, 7, 1, 10, 11, 3, 15, 1, 20],
+        duration = 30, // total playback, in seconds
         interval = duration/dataset.length,
         volumes = [],
         speeds = [];
@@ -48,9 +48,9 @@
                                 biquadFilter = context.createBiquadFilter();
                             sourceBuffer.buffer = buffer;
                             sourceBuffer.connect(masterVolume);
-                            masterVolume.connect(biquadFilter);
-                            biquadFilter.connect(context.destination);
-                            // biquadFilter.Q.value = 0.5; // makes quality rubbish
+                            masterVolume.connect(context.destination);
+                            // biquadFilter.connect(context.destination);
+                            // biquadFilter.Q.value = 1; // makes quality rubbish
                             var timepoint = startTime;
                             for (var i = 0; i < dataset.length; i++) {
                                 masterVolume.gain.linearRampToValueAtTime(volumes[i], timepoint);
