@@ -1,6 +1,4 @@
-(function () {
-
-    var dataset = [5, 7, 1, 10, 11, 20, 15, 1, 20],
+ var dataset = [5, 7, 1, 10, 11, 20, 15, 1, 20],
         duration = 30,
         interval = duration/dataset.length,
         volumes = [],
@@ -78,5 +76,3 @@
         var artist = $("#inputArtist").val()
         playSong(track, artist);
     });
-
-})();
