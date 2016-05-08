@@ -67,7 +67,9 @@ request.onload = function() {
 
         // Bend it like Beckham
         pitchBender.type = "allpass"; // doesn't do anything
-        sourceBuffer.playbackRate.value = 3.6;
+        sourceBuffer.playbackRate.setValueAtTime(3.6, startTime);
+        sourceBuffer.playbackRate.linearRampToValueAtTime(3.0, startTime+10);
+        sourceBuffer.playbackRate.linearRampToValueAtTime(0.5, startTime+15);
 
         // Start playing now
         sourceBuffer.start(startTime);
