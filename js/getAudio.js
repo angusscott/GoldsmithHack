@@ -18,26 +18,12 @@
                     request.open('GET', previewUrl, true);
                     request.responseType = 'arraybuffer';
                     request.onload = function() {
-                        // Create offline context
-                        var OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-                        var offlineContext = new OfflineContext(1, 2, 44100);
-
-                        offlineContext.decodeAudioData(request.response, function(buffer) {
-
-                            // Create buffer source
-                            var source = offlineContext.createBufferSource();
-                            source.buffer = buffer;
-
-                            // Create filter
-                            var filter = offlineContext.createBiquadFilter();
-                            filter.type = "lowpass";
-
-                            // Pipe the song into the filter, and the filter into the offline context
-                            //filter.connect(offlineContext.destination);
-                            source.connect(offlineContext.destination);
-                            console.log(source)
-                            source.start(offlineContext.currentTime);
-
+                        var undecodedAudio = request.response;
+                        context.decodeAudioData(undecodedAudio, function (buffer) {
+                            var sourceBuffer = context.createBufferSource();
+                            sourceBuffer.buffer = buffer;
+                            sourceBuffer.connect(context.destination);
+                            sourceBuffer.start(context.currentTime);
                         });
                     }
                     request.send();
@@ -55,8 +41,14 @@
         searchTracks(query);
     }
 
-    $( "#playmusic" ).click(function() {
+    $( "#randomise" ).click(function() {
         playSong("Sandstorm", "Darude");
+    });
+
+    $("#playmusic").click(function () {
+        var track = $("#inputTrack").val()
+        var artist = $("#inputArtist").val()
+        playSong(track, artist);
     });
 
 })();
