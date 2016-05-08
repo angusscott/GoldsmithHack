@@ -1,3 +1,5 @@
+$("#dataInputBox").val(dataset.toString());
+
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = $("#graphContainer").width() - margin.left - margin.right,
     height = ($("#graphContainer").width()/3)*2 - margin.top - margin.bottom;

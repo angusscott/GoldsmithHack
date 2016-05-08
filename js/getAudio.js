@@ -18,12 +18,11 @@
         spdmin = 0.5,
         spdmax = 3.0;
 
-    for (var i=0; i<dataset.length; i++) {
-        volumes.push(linearScale(dataset[i], volmin, volmax));
-        speeds.push(linearScale(dataset[i], spdmin, spdmax));
-    };
-
     function searchTracks(query) {
+        for (var i=0; i<dataset.length; i++) {
+            volumes.push(linearScale(dataset[i], volmin, volmax));
+            speeds.push(linearScale(dataset[i], spdmin, spdmax));
+        };
         $.ajax({
             url: 'https://api.spotify.com/v1/search',
             data: {
