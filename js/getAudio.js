@@ -84,7 +84,7 @@
             $("#inputArtist").val("Darude");
         } else {
             console.log('Playing Rick Astley');
-            playSong("Never Gonna Give You Up", "Rick Astley);
+            playSong("Never Gonna Give You Up", "Rick Astley");
             $("#inputTrack").val("Never Gonna Give You Up");
             $("#inputArtist").val("Rick Astley");
         };
